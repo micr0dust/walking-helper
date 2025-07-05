@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GPS 公里紀錄器</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#333"/>
+</head>
+<body>
+
+    <div class="container">
+        <h1>GPS 公里紀錄器</h1>
+
+        <div class="stats">
+            <div class="stat">
+                <div class="label">總距離</div>
+                <div class="value"><span id="distance">0.000</span> km</div>
+            </div>
+            <div class="stat">
+                <div class="label">目前時速</div>
+                <div class="value"><span id="speed">0</span> km/h</div>
+            </div>
+        </div>
+
+        <div id="status" class="status-box">請按下「開始」來紀錄</div>
+
+        <div class="controls">
+            <button id="toggleBtn">開始紀錄</button>
+            <button id="resetBtn">重設距離</button>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
