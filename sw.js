@@ -1,21 +1,25 @@
 const CACHE_NAME = 'gps-tracker-cache-v1';
 const urlsToCache = [
-    '/',
-    '/index.html',
-    '/style.css',
-    '/app.js',
-    '/manifest.json',
-    '/icons/icon-192x192.png',
-    '/icons/icon-512x512.png'
+    './',
+    './index.html',
+    './style.css',
+    './app.js',
+    './manifest.json',
+    './icons/icon-192x192.png',
+    './icons/icon-512x512.png'
 ];
 
 // 安裝 Service Worker 時，快取核心檔案
 self.addEventListener('install', event => {
+    console.log('Service Worker installing...');
     event.waitUntil(
         caches.open(CACHE_NAME)
             .then(cache => {
                 console.log('Opened cache');
                 return cache.addAll(urlsToCache);
+            })
+            .catch(error => {
+                console.error('Cache installation failed:', error);
             })
     );
 });
@@ -39,5 +43,21 @@ self.addEventListener('fetch', event => {
                 // 網路請求失敗，從快取中回傳
                 return caches.match(event.request);
             })
+    );
+});
+
+// 啟用新的 Service Worker
+self.addEventListener('activate', event => {
+    console.log('Service Worker activating...');
+    event.waitUntil(
+        caches.keys().then(cacheNames => {
+            return Promise.all(
+                cacheNames.map(cacheName => {
+                    if (cacheName !== CACHE_NAME) {
+                        return caches.delete(cacheName);
+                    }
+                })
+            );
+        })
     );
 });
